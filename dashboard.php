@@ -50,6 +50,7 @@ try {
         SELECT 
             c.id,
             cl.company_name as client,
+            cl.id as client_id,
             c.case_number,
             c.created_at,
             c.client_code,
@@ -469,6 +470,12 @@ foreach ($cases as &$case) {
                                                     </a>
                                                     <a href="timeline.php?id=<?= $case['id'] ?>">
                                                         <i class="fas fa-history"></i> View Timeline
+                                                    </a>
+                                                    <div class="menu-divider"></div>
+                                                    <a href="delete-client.php?id=<?= $case['client_id'] ?>&client_code=<?= urlencode($case['client_code']) ?>" 
+                                                       class="delete-action"
+                                                       onclick="return confirm('Are you sure you want to preview the deletion of client <?= htmlspecialchars($case['client']) ?>? This will show all related records that would be affected.')">
+                                                        <i class="fas fa-trash-alt"></i> Delete Client
                                                     </a>
                                                 </div>
                                             </div>
@@ -1021,6 +1028,20 @@ foreach ($cases as &$case) {
 
         .action-menu-content a:hover {
             background: #f8f9fa;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: #e9ecef;
+            margin: 5px 0;
+        }
+
+        .delete-action {
+            color: #dc3545 !important;
+        }
+
+        .delete-action:hover {
+            background: #f8d7da !important;
         }
 
         .action-menu:hover .action-menu-content {
